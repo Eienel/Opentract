@@ -1,0 +1,13 @@
+# Mock sweep spec -- exercises scripts/sweep.py offline (stub backend, mock data).
+# Drives the sweep test and lets the team see the tuning workflow before the
+# real dataset arrives.
+
+base: configs/mock.yaml
+dev_unified: data/mock/unified.jsonl
+dev_eval: data/mock/eval.jsonl
+out_best: outputs/best_mock.yaml
+
+grid:
+  retrieval.k_shots: [1, 3]
+  retrieval.strategy: [similarity, class_balanced]
+  retrieval.ordering: [similar_last, similar_first]

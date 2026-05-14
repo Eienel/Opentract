@@ -10,7 +10,7 @@ import os
 from .backends.base import build_backend
 from .config import Config
 from .datasets import load_unified
-from .embedding import build_embedding
+from .embedding import EmbeddingModel, build_embedding
 from .parser import OutputParser
 from .prompt import PromptBuilder
 from .retriever import ExemplarStore, Retriever
@@ -40,6 +40,20 @@ def load_index(cfg: Config) -> ExemplarStore:
 def build_runner(cfg: Config, cache_path: str | None = None) -> AnnotationRunner:
     embedder = build_embedding(cfg.embedding)
     store = load_index(cfg)
+    return assemble_runner(cfg, embedder, store, cache_path=cache_path)
+
+
+def assemble_runner(
+    cfg: Config,
+    embedder: EmbeddingModel,
+    store: ExemplarStore,
+    cache_path: str | None = None,
+) -> AnnotationRunner:
+    """Build a runner from prebuilt components.
+
+    Lets the sweep harness reuse one embedder + exemplar store across many
+    config variations instead of reloading them each iteration.
+    """
     retriever = Retriever(store, cfg.retrieval, embedder)
     prompt_builder = PromptBuilder(cfg.prompt, cfg.task)
     parser = OutputParser(cfg.parser, cfg.task)

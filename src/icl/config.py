@@ -160,3 +160,39 @@ def _build(dc_type: type, raw: dict[str, Any]) -> Any:
         else:
             kwargs[name] = value
     return dc_type(**kwargs)
+
+
+def apply_overrides(cfg: Config, overrides: dict[str, Any]) -> Config:
+    """Return a deep copy of `cfg` with dotted-key overrides applied.
+
+    Keys look like "retrieval.k_shots". Used by the sweep harness to explore
+    config variations without mutating the base config.
+    """
+    import copy
+
+    cfg = copy.deepcopy(cfg)
+    for dotted, value in overrides.items():
+        section, _, field_name = dotted.partition(".")
+        if not field_name:
+            raise ValueError(f"Override key must be 'section.field', got {dotted!r}")
+        sub = getattr(cfg, section, None)
+        if sub is None or not is_dataclass(sub):
+            raise ValueError(f"Unknown config section: {section!r}")
+        if not hasattr(sub, field_name):
+            raise ValueError(f"Unknown field {field_name!r} in section {section!r}")
+        setattr(sub, field_name, value)
+    return cfg
+
+
+def to_dict(cfg: Config) -> dict[str, Any]:
+    from dataclasses import asdict
+
+    return asdict(cfg)
+
+
+def dump_yaml(cfg: Config, path: str) -> None:
+    import os
+
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    with open(path, "w", encoding="utf-8") as fh:
+        yaml.safe_dump(to_dict(cfg), fh, allow_unicode=True, sort_keys=False)

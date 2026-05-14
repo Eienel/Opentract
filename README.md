@@ -41,12 +41,14 @@ python scripts/evaluate.py    --config configs/mock.yaml
 ## Layout
 
 ```
-configs/        default.yaml (real run) + mock.yaml (offline test)
+configs/        default.yaml (real run), mock.yaml (offline test),
+                sweep.yaml + sweep_mock.yaml (tuning grids)
 data/mock/      tiny separable dataset for hermetic E2E testing
 data/real/      committee dataset goes here (gitignored)
 src/icl/        config, datasets, backends/, embedding, retriever,
                 prompt, parser, chunking, runner, evaluator, pipeline
-scripts/        build_index.py, annotate.py, evaluate.py
+scripts/        build_index.py, annotate.py, evaluate.py,
+                make_dev_split.py, sweep.py
 tests/          test_e2e_mock.py
 ```
 
@@ -75,7 +77,29 @@ After registering and downloading the committee data into `data/real/`, edit
 - `evaluation.metric` — confirm the official metric (accuracy / macro_f1).
 
 Then tune `retrieval.k_shots` / `strategy` / `ordering`, `self_consistency.n`,
-and `backend.thinking_mode` on a held-out labelled slice.
+and `backend.thinking_mode` on a held-out labelled slice (see below).
+
+## Tuning workflow (Day 5)
+
+The committee eval set may ship without gold labels, so tune on a held-out
+slice carved from the unified pool:
+
+```bash
+# 1. split the labelled unified pool -> retrieval pool + scored dev set
+python scripts/make_dev_split.py --config configs/default.yaml \
+    --tune-out data/real/unified_tune.jsonl --dev-out data/real/dev.jsonl --dev-frac 0.2
+
+# 2. grid-search ICL settings (edit the grid in configs/sweep.yaml first)
+python scripts/sweep.py --sweep configs/sweep.yaml      # -> ranked table + configs/best.yaml
+
+# 3. annotate the real eval set with the winning config
+python scripts/annotate.py --config configs/best.yaml --cache outputs/run_cache.jsonl
+```
+
+`sweep.py` runs the full pipeline for every grid cell against the dev set and
+writes the best-scoring config. Cost = `cells x len(dev)` model calls, so keep
+the dev set (~50-100 rows) and grid modest on a paid API. Try it offline first:
+`python scripts/sweep.py --sweep configs/sweep_mock.yaml`.
 
 ## ICL techniques (ranked by accuracy-per-hour)
 
@@ -88,8 +112,11 @@ and `backend.thinking_mode` on a held-out labelled slice.
 
 ## Status / next steps
 
-- [x] End-to-end pipeline working on mock data, tests green.
-- [ ] Register (Feishu form + Kaggle), lock in Track 3, download the dataset.
+- [x] End-to-end pipeline working on mock data, tests green (7/7).
+- [x] Day-5 tuning tooling: dev-split maker + config sweep harness.
+- [x] Registered for the challenge (Feishu form submitted).
+- [ ] Join the Kaggle competition, lock in Track 3, download the dataset.
 - [ ] Confirm official submission schema + metric.
-- [ ] Wire `openai_api` backend to a hosted Qwen3-4B endpoint; tune on held-out split.
-- [ ] Final run + technical report.
+- [ ] Wire `openai_api` backend to a hosted Qwen3-4B endpoint.
+- [ ] Make dev split, run the sweep, pick best config.
+- [ ] Final run on the real eval set + technical report.

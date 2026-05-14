@@ -75,3 +75,58 @@ def test_unknown_config_key_fails_loudly(tmp_path):
     bad.write_text("retrieval:\n  k_shots: 3\n  bogus_key: 1\n", encoding="utf-8")
     with pytest.raises(ValueError, match="Unknown config keys"):
         Config.from_yaml(str(bad))
+
+
+def test_apply_overrides_is_isolated_and_validated():
+    import pytest
+
+    from icl.config import apply_overrides
+
+    base = _cfg()
+    tuned = apply_overrides(base, {"retrieval.k_shots": 9, "backend.thinking_mode": True})
+    assert tuned.retrieval.k_shots == 9
+    assert tuned.backend.thinking_mode is True
+    # Base config is untouched (deep copy).
+    assert base.retrieval.k_shots == 3
+    with pytest.raises(ValueError, match="Unknown field"):
+        apply_overrides(base, {"retrieval.nope": 1})
+
+
+def test_dump_yaml_roundtrips(tmp_path):
+    from icl.config import dump_yaml
+
+    cfg = _cfg()
+    out = tmp_path / "rt.yaml"
+    dump_yaml(cfg, str(out))
+    reloaded = Config.from_yaml(str(out))
+    assert reloaded.retrieval.k_shots == cfg.retrieval.k_shots
+    assert reloaded.task.label_space == cfg.task.label_space
+
+
+def test_sweep_runs_and_picks_best(tmp_path, monkeypatch):
+    """End-to-end sweep on mock data: must rank combos and emit a best config."""
+    import runpy
+    import sys
+
+    repo = os.path.dirname(os.path.dirname(__file__))
+    out_best = tmp_path / "best.yaml"
+    spec = tmp_path / "sweep.yaml"
+    spec.write_text(
+        "base: configs/mock.yaml\n"
+        "dev_unified: data/mock/unified.jsonl\n"
+        "dev_eval: data/mock/eval.jsonl\n"
+        f"out_best: {out_best}\n"
+        "grid:\n"
+        "  retrieval.k_shots: [1, 3]\n"
+        "  retrieval.ordering: [similar_last, similar_first]\n",
+        encoding="utf-8",
+    )
+    monkeypatch.chdir(repo)
+    monkeypatch.syspath_prepend(os.path.join(repo, "scripts"))
+    monkeypatch.setattr(sys, "argv", ["sweep.py", "--sweep", str(spec)])
+    runpy.run_path(os.path.join(repo, "scripts", "sweep.py"), run_name="__main__")
+
+    assert out_best.exists()
+    best = Config.from_yaml(str(out_best))
+    assert best.retrieval.k_shots in (1, 3)
+    assert best.retrieval.ordering in ("similar_last", "similar_first")
