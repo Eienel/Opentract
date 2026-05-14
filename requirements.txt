@@ -1,0 +1,16 @@
+# Core pipeline dependencies (no GPU required)
+pyyaml>=6.0
+jinja2>=3.1
+numpy>=1.24
+tqdm>=4.66
+tenacity>=8.2
+openai>=1.30
+pytest>=8.0
+
+# Embeddings for retrieval-based exemplar selection.
+# sentence-transformers pulls torch (CPU build is fine). If install is too heavy,
+# the retriever falls back to a hashing embedder automatically.
+sentence-transformers>=2.7
+
+# Optional: faster nearest-neighbour search. numpy fallback used if absent.
+# faiss-cpu>=1.8

@@ -1,0 +1,30 @@
+{"id": "u01", "text": "This product is amazing and I love it so much, best purchase ever", "label": "positive"}
+{"id": "u02", "text": "Absolutely fantastic quality, I love this and would buy again happily", "label": "positive"}
+{"id": "u03", "text": "Wonderful experience, the item exceeded my expectations completely", "label": "positive"}
+{"id": "u04", "text": "Great value and excellent build, I am very happy with this purchase", "label": "positive"}
+{"id": "u05", "text": "Superb product, fast shipping, I love everything about this order", "label": "positive"}
+{"id": "u06", "text": "Delighted with this, the quality is excellent and it works perfectly", "label": "positive"}
+{"id": "u07", "text": "Highly recommend, amazing value and the best customer service ever", "label": "positive"}
+{"id": "u08", "text": "I love how well this works, fantastic and worth every penny", "label": "positive"}
+{"id": "u09", "text": "Terrible product, it broke after one day and I hate it", "label": "negative"}
+{"id": "u10", "text": "Awful quality, completely useless, I hate this purchase so much", "label": "negative"}
+{"id": "u11", "text": "Horrible experience, the item arrived broken and customer service ignored me", "label": "negative"}
+{"id": "u12", "text": "Worst purchase ever, terrible build quality and a total waste of money", "label": "negative"}
+{"id": "u13", "text": "Very disappointed, the product is defective and broke immediately", "label": "negative"}
+{"id": "u14", "text": "Do not buy this, awful and useless, I hate everything about it", "label": "negative"}
+{"id": "u15", "text": "Bad quality, it stopped working and the refund was denied, horrible", "label": "negative"}
+{"id": "u16", "text": "Disappointing and cheap, broke fast, worst money I ever spent", "label": "negative"}
+{"id": "u17", "text": "The product is okay, it works but nothing special about it", "label": "neutral"}
+{"id": "u18", "text": "It is fine, does the job, neither good nor bad really", "label": "neutral"}
+{"id": "u19", "text": "Average item, it works as described, no strong opinion either way", "label": "neutral"}
+{"id": "u20", "text": "Decent enough, it is okay for the price, nothing remarkable here", "label": "neutral"}
+{"id": "u21", "text": "The item arrived on time, it works, an ordinary product overall", "label": "neutral"}
+{"id": "u22", "text": "It is acceptable, does what it says, a fairly standard purchase", "label": "neutral"}
+{"id": "u23", "text": "Neither impressed nor disappointed, it is just a normal okay product", "label": "neutral"}
+{"id": "u24", "text": "Works fine, average quality, an unremarkable but functional item", "label": "neutral"}
+{"id": "u25", "text": "Love the design and the quality is amazing, very happy customer", "label": "positive"}
+{"id": "u26", "text": "Excellent and reliable, I love using this every single day", "label": "positive"}
+{"id": "u27", "text": "Hate this item, terrible and broke quickly, awful waste of money", "label": "negative"}
+{"id": "u28", "text": "Useless and horrible, the worst quality, it broke right away", "label": "negative"}
+{"id": "u29", "text": "It is okay, works fine, just an average ordinary product nothing more", "label": "neutral"}
+{"id": "u30", "text": "Fairly standard, does the job okay, neither remarkable nor bad", "label": "neutral"}

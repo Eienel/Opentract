@@ -1,0 +1,83 @@
+# Default configuration for the ICL annotation pipeline.
+#
+# This file is the SINGLE adaptation surface. When the FlagOS committee dataset
+# arrives after registration, edit the values here -- no code changes needed.
+# Every key is documented in src/icl/config.py.
+
+dataset:
+  unified_path: data/real/unified.jsonl   # labelled exemplar pool
+  eval_path: data/real/eval.jsonl         # items to annotate (labels optional)
+  format: jsonl                           # jsonl | json | csv
+  id_field: id
+  input_field: text                       # <-- map to the real input column
+  label_field: label                      # <-- map to the real label column
+  metadata_fields: []
+
+task:
+  description: >-
+    Annotate each input according to the task definition. Read the input
+    carefully and output the single most appropriate annotation.
+  label_space: []          # fill in the closed label set if the task has one
+
+backend:
+  type: openai_api         # stub | openai_api | transformers | llamacpp
+  model: Qwen/Qwen3-4B
+  base_url: https://openrouter.ai/api/v1   # or DashScope / local vLLM endpoint
+  api_key_env: OPENAI_API_KEY
+  max_tokens: 512
+  temperature: 0.0
+  thinking_mode: false     # Qwen3 reasoning mode -- A/B test on a held-out slice
+  request_timeout: 120
+  max_retries: 4
+  extra: {}
+
+embedding:
+  type: sentence_transformers    # sentence_transformers | hashing
+  model: BAAI/bge-m3             # multilingual -- dataset may be Chinese/mixed
+  cache_dir: .index_cache
+  dim: 512                       # hashing fallback only
+
+retrieval:
+  k_shots: 5
+  strategy: similarity           # similarity | random | class_balanced
+  ordering: similar_last         # similar_last | similar_first | as_is
+  seed: 0
+
+self_consistency:
+  n: 1                           # raise to 3-5 once accuracy plateaus
+  temperature: 0.7
+
+chunking:
+  max_input_chars: 24000
+  overlap_chars: 500
+  aggregation: majority          # majority | first
+
+parser:
+  type: label                    # label | json | regex
+  json_key: label
+  regex: null
+  max_retries: 2
+
+prompt:
+  system: >-
+    You are a precise data annotation engine. Follow the instructions exactly
+    and output only the requested annotation.
+  template: |
+    {{ task_description }}
+
+    {% if label_space %}Valid labels: {{ label_space | join(', ') }}
+
+    {% endif %}{% for ex in exemplars %}Input: {{ ex.input_text }}
+    Annotation: {{ ex.label }}
+
+    {% endfor %}Input: {{ query.input_text }}
+    Annotation:
+
+submission:
+  format: jsonl                  # jsonl | csv
+  path: outputs/submission.jsonl
+  id_field: id
+  prediction_field: label
+
+evaluation:
+  metric: accuracy               # accuracy | macro_f1 -- confirm official metric

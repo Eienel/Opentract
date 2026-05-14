@@ -1,0 +1,7 @@
+# Extra deps for running Qwen3-4B on a rented cloud GPU via the transformers backend.
+# Install on the GPU box only: pip install -r requirements.txt -r requirements-gpu.txt
+-r requirements.txt
+torch>=2.3
+transformers>=4.51
+accelerate>=0.30
+# vllm  # alternative: serve an OpenAI-compatible endpoint, then use the openai_api backend

@@ -1,0 +1,81 @@
+# Mock configuration -- hermetic end-to-end run with no GPU/API/network.
+# Uses the offline stub backend and the dependency-free hashing embedder.
+# Drives tests/test_e2e_mock.py and lets the team validate the pipeline shape
+# before the real dataset arrives.
+
+dataset:
+  unified_path: data/mock/unified.jsonl
+  eval_path: data/mock/eval.jsonl
+  format: jsonl
+  id_field: id
+  input_field: text
+  label_field: label
+  metadata_fields: []
+
+task:
+  description: >-
+    Classify the sentiment of the customer review as positive, negative, or
+    neutral.
+  label_space: [positive, negative, neutral]
+
+backend:
+  type: stub
+  model: stub
+  base_url: ""
+  api_key_env: OPENAI_API_KEY
+  max_tokens: 64
+  temperature: 0.0
+  thinking_mode: false
+  request_timeout: 30
+  max_retries: 1
+  extra: {}
+
+embedding:
+  type: hashing
+  model: hashing
+  cache_dir: .index_cache
+  dim: 256
+
+retrieval:
+  k_shots: 3
+  strategy: similarity
+  ordering: similar_last
+  seed: 0
+
+self_consistency:
+  n: 1
+  temperature: 0.7
+
+chunking:
+  max_input_chars: 24000
+  overlap_chars: 500
+  aggregation: majority
+
+parser:
+  type: label
+  json_key: label
+  regex: null
+  max_retries: 1
+
+prompt:
+  system: >-
+    You are a precise data annotation engine. Output only the sentiment label.
+  template: |
+    {{ task_description }}
+
+    {% if label_space %}Valid labels: {{ label_space | join(', ') }}
+
+    {% endif %}{% for ex in exemplars %}Input: {{ ex.input_text }}
+    Annotation: {{ ex.label }}
+
+    {% endfor %}Input: {{ query.input_text }}
+    Annotation:
+
+submission:
+  format: jsonl
+  path: outputs/mock_submission.jsonl
+  id_field: id
+  prediction_field: label
+
+evaluation:
+  metric: accuracy

@@ -1,0 +1,12 @@
+{"id": "e01", "text": "This product is amazing, I love it, best purchase I ever made", "label": "positive"}
+{"id": "e02", "text": "Fantastic quality and excellent value, I am very happy and would buy again", "label": "positive"}
+{"id": "e03", "text": "Wonderful and superb, I love everything, the quality exceeded expectations", "label": "positive"}
+{"id": "e04", "text": "Amazing build and I love using this every day, highly recommend it", "label": "positive"}
+{"id": "e05", "text": "Terrible product, I hate it, it broke after one day, awful purchase", "label": "negative"}
+{"id": "e06", "text": "Horrible quality, completely useless, worst waste of money ever", "label": "negative"}
+{"id": "e07", "text": "Awful experience, the item arrived broken and customer service ignored me", "label": "negative"}
+{"id": "e08", "text": "Disappointing and defective, it broke immediately, do not buy this", "label": "negative"}
+{"id": "e09", "text": "The product is okay, it works but nothing special about it really", "label": "neutral"}
+{"id": "e10", "text": "Average and decent, it works as described, no strong opinion either way", "label": "neutral"}
+{"id": "e11", "text": "It is fine, an ordinary product, does the job, neither good nor bad", "label": "neutral"}
+{"id": "e12", "text": "Acceptable and standard, works okay for the price, nothing remarkable", "label": "neutral"}

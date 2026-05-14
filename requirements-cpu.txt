@@ -1,0 +1,5 @@
+# Extra deps for the CPU GGUF fallback backend (Qwen3-4B Q4_K_M via llama.cpp).
+# Last-resort path when no API budget and no GPU rental are available.
+-r requirements.txt
+llama-cpp-python>=0.2.79
+huggingface-hub>=0.23
