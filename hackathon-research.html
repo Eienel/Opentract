@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hackathon Research — Finding One to Win</title>
+<style>
+  :root {
+    --bg: #0f1115; --card: #181b22; --card2: #1f232c; --line: #2c313c;
+    --text: #e6e8ec; --muted: #9aa3b2; --accent: #6ea8fe; --gold: #f5c451;
+    --green: #5dd39e; --red: #f0776c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55; font-size: 16px;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 24px 18px 80px; }
+  header h1 { font-size: 1.6rem; margin: 0 0 4px; }
+  header p.sub { color: var(--muted); margin: 0 0 24px; font-size: 0.95rem; }
+  h2 {
+    font-size: 1.25rem; margin: 36px 0 14px; padding-bottom: 6px;
+    border-bottom: 2px solid var(--line);
+  }
+  h3 { font-size: 1.05rem; margin: 20px 0 6px; }
+  a { color: var(--accent); text-decoration: none; word-break: break-word; }
+  a:hover { text-decoration: underline; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 16px 18px; margin: 14px 0;
+  }
+  .card.best { border-color: var(--gold); }
+  .card.avoid { border-color: var(--red); opacity: 0.92; }
+  .tag {
+    display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;
+    text-transform: uppercase; padding: 3px 8px; border-radius: 6px; margin-bottom: 8px;
+  }
+  .tag.best { background: var(--gold); color: #1a1a1a; }
+  .tag.high { background: var(--green); color: #10241b; }
+  .tag.med  { background: #c9b76b; color: #241f10; }
+  .tag.avoid{ background: var(--red); color: #2a0f0c; }
+  .meta { color: var(--muted); font-size: 0.88rem; margin: 4px 0; }
+  .meta b { color: var(--text); }
+  ul { margin: 8px 0; padding-left: 20px; }
+  li { margin: 4px 0; }
+  .callout {
+    background: var(--card2); border-left: 3px solid var(--accent);
+    padding: 12px 16px; border-radius: 8px; margin: 14px 0;
+  }
+  .tldr { background: var(--card2); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+  .tldr ol { padding-left: 22px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.9rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  .src { font-size: 0.85rem; color: var(--muted); }
+  .src li { margin: 3px 0; }
+  footer { margin-top: 50px; color: var(--muted); font-size: 0.82rem; text-align: center; }
+  .pill { font-size: 0.78rem; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Hackathon Research — Finding One to Win</h1>
+  <p class="sub">Compiled from 4 parallel research agents · as of May 14, 2026 · for a 3-person team, strong general engineers, no dedicated GPU, can rent cheap cloud GPUs / use hosted APIs</p>
+</header>
+
+<div class="tldr">
+  <h3 style="margin-top:0">TL;DR — the play</h3>
+  <ol>
+    <li><b>Best pure-AI bet:</b> <a href="https://rapid-agent.devpost.com/">Google Cloud Rapid Agent Hackathon</a> — $60K across 6 small per-track pools, June 11 deadline, no GPU, no crypto.</li>
+    <li><b>Highest ceiling (crypto, tight):</b> <a href="https://overflow.sui.io/">Sui Overflow 2026</a> — $1M+ pool, has an AI-agent track, but submission ~May 23 and you'd learn Move fast.</li>
+    <li><b>Watch & grab a spot:</b> next <a href="https://cerebralvalley.ai/e/built-with-4-7-hackathon">Cerebral Valley "Built with Claude Code"</a> (likely June) and the <a href="https://www.mcphackathon.com/">Global MCP Hackathon</a> (Aug edition).</li>
+    <li><b>How to actually win:</b> stop building at ~70% of the clock, narrow scope to one demo path, record a scripted &lt;3-min demo, target sponsor tracks not the grand prize.</li>
+  </ol>
+</div>
+
+<!-- ============================ -->
+<h2>1 · Open AI Hackathons — shortlist</h2>
+
+<div class="card best">
+  <span class="tag best">★ Best pick</span>
+  <h3>Google Cloud Rapid Agent Hackathon</h3>
+  <p class="meta"><b>Host:</b> Google Cloud + Arize, Elastic, Fivetran, GitLab, MongoDB, Dynatrace</p>
+  <p class="meta"><b>Theme:</b> Build AI agents (Gemini + Agent Builder) that reason, plan, execute; integrates partner MCP servers</p>
+  <p class="meta"><b>Format:</b> Online · <b>Deadline:</b> June 11, 2026, 2pm PDT · <b>Prizes:</b> $60K total — six separate partner tracks, each $5K / $3K / $2K</p>
+  <p class="meta"><b>Eligibility:</b> 18+, some countries excluded</p>
+  <p><b>Winnability: HIGH.</b> The six-track structure means you compete in a small pool per track, not against everyone. No heavy GPU (Gemini API + cloud credits). Pick one partner track, build a tight polished agent. Best ratio of real money to realistic odds, with ~4 weeks runway.</p>
+  <p><a href="https://rapid-agent.devpost.com/">rapid-agent.devpost.com</a></p>
+</div>
+
+<div class="card">
+  <span class="tag med">Watch — Anthropic-themed</span>
+  <h3>Cerebral Valley "Built with Claude Code"</h3>
+  <p class="meta"><b>Host:</b> Cerebral Valley + Anthropic · <b>Format:</b> Online, ~1 week build</p>
+  <p class="meta"><b>Pattern:</b> Recurs every ~2 months tied to model releases (Opus 4.6 = Feb, 4.7 = April) — a <b>June/summer edition is very likely</b></p>
+  <p class="meta"><b>Prizes:</b> $100K cash pool + $500 API credits per participant · teams of 1–2 · ~500 selected</p>
+  <p><b>Winnability: MEDIUM-HIGH.</b> Most "Anthropic-themed" option, exactly your skill profile — past winners were often non-professional devs with a sharp idea. Downside: capped acceptance + 1–2 person teams (you'd split into a pair). <b>Action:</b> monitor the events page now to catch registration.</p>
+  <p><a href="https://cerebralvalley.ai/e/built-with-4-7-hackathon">cerebralvalley.ai/events</a></p>
+</div>
+
+<div class="card">
+  <span class="tag med">Watch — MCP / Anthropic-affiliated</span>
+  <h3>Global MCP Hackathon (Descope)</h3>
+  <p class="meta"><b>Host:</b> Descope + Anthropic, Vercel, Neon, GitHub, Daytona, Cequence</p>
+  <p class="meta"><b>Theme:</b> MCP servers / AI agents — three tracks (purposeful agent, secure MCP server, multi-agent)</p>
+  <p class="meta"><b>Timing:</b> An <b>August 2026 edition</b> is listed; registration likely opens mid-summer · <b>Prizes:</b> $100K+ — per track $4K / $3K / $1.5K cash + large credits</p>
+  <p><b>Winnability: HIGH if it runs again.</b> MCP-themed (directly your wheelhouse), three-track structure shrinks the field. Slightly outside a July window — check the registry weekly.</p>
+  <p><a href="https://www.mcphackathon.com/">mcphackathon.com</a> · <a href="https://globalmcphackathon.com">globalmcphackathon.com</a></p>
+</div>
+
+<div class="card">
+  <span class="tag med">Secondary</span>
+  <h3>AWS AI Agent Global Hackathon</h3>
+  <p class="meta"><b>Host:</b> AWS · <b>Theme:</b> AI agents · <b>Format:</b> Online · <b>Prizes:</b> $45K cash pool</p>
+  <p><b>Winnability: MEDIUM.</b> Solid prize, online, agent-themed — verify current dates on the page. AWS branding draws a larger field than the niche partner-track events, so odds a notch lower than the Google Cloud one.</p>
+  <p><a href="https://aws-agent-hackathon.devpost.com/">aws-agent-hackathon.devpost.com</a></p>
+</div>
+
+<div class="card">
+  <span class="tag med">Warm-up only</span>
+  <h3>Microsoft Agent Academy Hackathon</h3>
+  <p class="meta"><b>Host:</b> Microsoft · <b>Theme:</b> AI agents on Azure stack · <b>Runs:</b> May 12 – June 2, 2026</p>
+  <p><b>Winnability: HIGH to place, LOW prize value</b> (per-submission badges, small cash). Good as a portfolio builder / warm-up, not a money target.</p>
+  <p><a href="https://microsoft.github.io/agent-academy/events/hackathon/">microsoft.github.io/agent-academy</a></p>
+</div>
+
+<div class="card avoid">
+  <span class="tag avoid">Skip</span>
+  <p style="margin:0"><b>OpenAI Open Model Hackathon</b> — ended (Sept 2025). <b>USAII / Hack-Nation / UC Berkeley AI Hackathon</b> — students-only or massive fields (1,300+ hackers). <b>LlamaIndex RAG Hackathon</b> — in-person Santa Clara only.</p>
+</div>
+
+<!-- ============================ -->
+<h2>2 · Crypto / Web3 Company Hackathons — shortlist</h2>
+<p class="meta">The crypto calendar runs in seasonal waves — several big spring events (Chainlink Convergence, Polkadot Solidity, Colosseum Solana Frontier, Base Batches) have already closed or are in judging. Below is what's open or opening soon.</p>
+
+<div class="card best">
+  <span class="tag best">★ Best crypto pick</span>
+  <h3>Sui Overflow 2026</h3>
+  <p class="meta"><b>Sponsor:</b> Sui Foundation · <b>Format:</b> Online, global · <b>Registration:</b> OPEN · <b>Submission:</b> ~May 23, 2026 (tight ~9-day sprint — confirm exact close)</p>
+  <p class="meta"><b>Prizes:</b> $1M+ total; $500K+ across tracks. Core track 1st = $30K + many sponsored bounties</p>
+  <p><b>Winnability: HIGH.</b> Has a dedicated <b>"Agentic Web" AI track</b> (autonomous AI agents) — plays to your strengths. Friction: you'd learn <b>Move</b>, but the AI-agent track keeps most logic off-chain. Many parallel bounties = multiple shots. KYC likely only at payout.</p>
+  <p><a href="https://overflow.sui.io/">overflow.sui.io</a></p>
+</div>
+
+<div class="card">
+  <span class="tag med">Next shot</span>
+  <h3>ETHGlobal Unite DeFi</h3>
+  <p class="meta"><b>Sponsor:</b> 1inch + ETHGlobal · <b>Format:</b> Online · <b>Dates:</b> July 25 – Aug 6, 2026 (submission Aug 3) · <b>Prizes:</b> ~$525K</p>
+  <p><b>Winnability: MEDIUM.</b> Deeply DeFi/Solidity-focused, less AI-friendly, strong competition — but ETHGlobal events are legit, well-organized, and pay cash with clean panel judging (not community vote).</p>
+  <p><a href="https://ethglobal.com/events">ethglobal.com/events</a></p>
+</div>
+
+<div class="card">
+  <span class="tag med">Watch the page</span>
+  <h3>Chainlink — next seasonal hackathon</h3>
+  <p class="meta">Convergence (Feb–Mar 2026) just ended; Chainlink runs ~2/year, so a mid-2026 edition is likely.</p>
+  <p><b>Winnability: MEDIUM-HIGH when open.</b> Past pools $120K+, strong AI Agents track, panel-judged, pays cash. Requires using a Chainlink product in a Solidity contract.</p>
+  <p><a href="https://chain.link/hackathon">chain.link/hackathon</a></p>
+</div>
+
+<div class="card">
+  <span class="tag med">Smaller / lighter field</span>
+  <h3>Stellar Build Better Hackathon</h3>
+  <p class="meta"><b>Format:</b> Online via DoraHacks · <b>Prizes:</b> ~$25–30K USDC (1st ~$12K)</p>
+  <p><b>Winnability: MEDIUM.</b> Smaller pool, lighter competition — but DoraHacks community voting (BUIDL/quadratic) is gameable and not pure merit. Uses Soroban (Rust-based). Verify cohort dates.</p>
+  <p><a href="https://dorahacks.io/hackathon/build-on-stellar">dorahacks.io/hackathon/build-on-stellar</a> · <a href="https://betteron.stellar.org/">betteron.stellar.org</a></p>
+</div>
+
+<div class="card avoid">
+  <span class="tag avoid">Avoid / not "soon"</span>
+  <ul style="margin:0">
+    <li><b>Colosseum Solana Frontier</b> — ended (in judging); next is Fall (Sept 28 – Nov 2, 2026). Bookmark, don't wait on it.</li>
+    <li><b>Base Batches 2026</b> — closed; it's an accelerator (grant + investment, not cash) favoring incorporated startups.</li>
+    <li><b>Polkadot Solidity, Chainlink Convergence, Avalanche Build Games</b> — all closed.</li>
+    <li><b>Generic DoraHacks "AI trading" / token-grant hackathons</b> — prizes often paid in illiquid tokens, community-voted. Low ROI.</li>
+  </ul>
+</div>
+
+<div class="callout">
+  <b>Honest crypto friction:</b> Languages — Solana/Sui/Aptos use Rust/Move, Ethereum/Base/Polygon/Chainlink use Solidity; pick one ecosystem and commit (AI-agent tracks minimize on-chain code). Prizes — ETHGlobal & Chainlink pay cash/USDC reliably; DoraHacks-hosted events frequently pay native tokens (discount those). Judging — ETHGlobal/Chainlink use expert panels; community-voted events reward social reach, not code. KYC — near-universal at payout (tax/sanctions), rarely blocks entry.
+</div>
+
+<!-- ============================ -->
+<h2>3 · Platform Map — where to hunt</h2>
+
+<table>
+  <tr><th>Platform</th><th>What it hosts</th><th>Notes for your team</th></tr>
+  <tr><td><a href="https://lablab.ai/ai-hackathons">lablab.ai</a></td><td>Pure AI/agents, short 2–7 day sprints, fully online</td><td><b>Best winnability.</b> Small fields, hosted-API friendly, no GPU. Monitor weekly.</td></tr>
+  <tr><td><a href="https://devpost.com/c/artificial-intelligence">Devpost</a></td><td>Broadest aggregator — enterprise-sponsored AI, cloud, general</td><td><b>Highest expected value.</b> Many prize categories, great filters. Set email alerts on the AI category.</td></tr>
+  <tr><td><a href="https://www.hackerearth.com/challenges/hackathon/">HackerEarth</a></td><td>Enterprise-sponsored + India university; growing agentic-AI track</td><td>Solid second-tier source, smaller crowds than Devpost. Some India/student-locked.</td></tr>
+  <tr><td><a href="https://www.kaggle.com/competitions">Kaggle</a></td><td>ML/data-science leaderboard competitions (not build-hackathons)</td><td>Objective scoring, no judging politics. Hard to place top-3 vs specialists, but a good skill-builder.</td></tr>
+  <tr><td><a href="https://dorahacks.io/hackathon">DoraHacks</a></td><td>Crypto/Web3-dominant + AI/quantum tracks, online</td><td>Many parallel bounties, but community voting + token prizes + KYC. Non-crypto learning curve.</td></tr>
+  <tr><td><a href="https://ethglobal.com/">ETHGlobal</a></td><td>Elite Web3; ETHOnline is virtual, flagships in-person</td><td>Well-run, cash prizes, panel judging — but deep Web3 specialization + KYC + ETH stake.</td></tr>
+  <tr><td><a href="https://mlh.io/seasons/2026/events">MLH</a></td><td>Student-only, mostly in-person</td><td>Skip unless team has enrolled students — swag prizes, resume-building only.</td></tr>
+  <tr><td>Devfolio / Unstop</td><td>Web3 + India student/corporate events</td><td>Often region/student-locked. Skip unless India-based.</td></tr>
+  <tr><td>Taikai / AngelHack</td><td>Web3, EU-gov (defence, space) / corporate-sponsored</td><td>Niche, less crowded if eligible. Some EU-residency locks.</td></tr>
+</table>
+<p class="meta">Also worth bookmarking as aggregators: <a href="https://www.aicrowd.com/challenges">AICrowd</a>, <a href="https://www.drivendata.org/competitions/">DrivenData</a>, <a href="https://mlcontests.com/">ML Contests</a>.</p>
+
+<div class="callout">
+  <b>Monitor these 4:</b> lablab.ai (best odds) · Devpost AI (best EV) · HackerEarth (second-tier source) · Kaggle (skill-builder). For crypto, watch DoraHacks + ETHGlobal + Sui/Chainlink directly.
+</div>
+
+<!-- ============================ -->
+<h2>4 · How to Win — the playbook</h2>
+<p class="meta">The blunt judge consensus: <b>a mediocre project with a great pitch beats a great project with a mediocre pitch.</b></p>
+
+<h3>What judges score</h3>
+<p>~4 axes: <b>problem/impact, creativity, technical execution, presentation/demo.</b></p>
+
+<h3>Why projects lose</h3>
+<ul>
+  <li><b>Overscoping</b> — the #1 killer. A 3-month product crammed into 48h leaves nothing demo-able.</li>
+  <li><b>Weak/crashing demo</b> — judges see dozens of projects; if yours isn't clear in 3 minutes the brilliance is invisible.</li>
+  <li><b>Failing baseline requirements</b> — many submissions are DQ'd just for missing a required deliverable (video, repo link, sponsor tech).</li>
+  <li><b>Generic descriptions</b> — judges explicitly penalize recycled ideas and vague writeups.</li>
+</ul>
+
+<h3>Project selection</h3>
+<ul>
+  <li>Score ideas 1–5 on: demo-ability, story/personal pain point, technical depth, team passion. Pick the winner only if someone genuinely cares.</li>
+  <li><b>Demo-ability first:</b> can a judge experience the magic in 30 seconds?</li>
+  <li><b>Avoid the thin API wrapper.</b> Depth wins — multi-agent orchestration, real-time streaming, a real domain problem with measurable outcomes.</li>
+  <li><b>Useful + narrow beats novel + broad.</b></li>
+</ul>
+
+<h3>Time management (48h model)</h3>
+<ul>
+  <li><b>Hours 0–2:</b> lock the idea, write a tight 1-page PRD (also feeds your AI coding tools and prevents hallucinated implementations).</li>
+  <li><b>Hours 2–30:</b> build the single demo path only. Hardcode, fake auth, skip DBs, run locally.</li>
+  <li><b>Hard stop at ~70% of the window.</b> The last ~30% is only polish, demo video, and writeup — freeze the build, don't debug.</li>
+  <li>Use only tools you know cold. A hackathon is not when to learn a new framework.</li>
+</ul>
+
+<h3>Demo &amp; submission — where points are won/lost</h3>
+<ul>
+  <li>Demo video <b>&lt; 3 min</b>, scripted, screencast with narration of the actual flow. Lead with the problem and a working result, not architecture.</li>
+  <li><b>Record a backup demo</b> — never debug live.</li>
+  <li>Writeup: mirror the hackathon's stated judging criteria and inspiration language directly. Include the real repo.</li>
+  <li><b>Upload early</b> — video processing can take hours; last-minute uploads cause DQs.</li>
+  <li>Prepare 3 pitch lengths: one sentence, one tweet, 2-minute full.</li>
+</ul>
+
+<h3>Using AI coding tools without making a mess</h3>
+<ul>
+  <li>Start with the PRD/spec as shared context; let Claude Code work against it.</li>
+  <li>Build one vertical slice end-to-end first, then expand — don't scaffold everything broadly.</li>
+  <li>Small, reviewable commits; verify each feature works before moving on.</li>
+  <li>AI for boilerplate, UI scaffolding, glue code, demo script — humans on the core "magic" logic and integration.</li>
+</ul>
+
+<h3>AI/LLM-specific patterns</h3>
+<p><b>Overdone (won't win):</b> yet another RAG chatbot, single-prompt wrappers, generic "chat with your X."<br>
+<b>Winning in 2025–26:</b> multi-agent coordination, autonomous agents with measurable results (ROI, win-rate, risk reduction), real-time streamed agent progress (SSE/WebSockets), full-stack execution tied to a specific domain.</p>
+
+<h3>Sponsor-track strategy</h3>
+<ul>
+  <li>Sponsor prizes have less competition than the grand prize — easier ROI.</li>
+  <li><b>Design one project to qualify for 2–4 sponsor tracks at once</b> — most teams don't think to do this.</li>
+  <li>Talk to sponsor reps during the event — they tell you what they want and often influence judging.</li>
+</ul>
+
+<div class="callout">
+  <b>8-step checklist:</b> (1) Read rules + judging criteria first, list every required deliverable. (2) Score ideas; pick demo-able + narrow + real problem. (3) Write a 1-page PRD. (4) Build one vertical demo path; hardcode the rest. (5) Stop building at 70% of the clock. (6) Record a scripted &lt;3-min screencast + backup. (7) Write the submission echoing the criteria; upload early. (8) Design for 2+ sponsor tracks; chat up sponsor reps.
+</div>
+
+<!-- ============================ -->
+<h2>5 · Sources</h2>
+<ul class="src">
+  <li>Open AI hackathons: <a href="https://rapid-agent.devpost.com/">Google Cloud Rapid Agent</a> · <a href="https://microsoft.github.io/agent-academy/events/hackathon/">MS Agent Academy</a> · <a href="https://globalmcphackathon.com">Global MCP Hackathon</a> · <a href="https://www.mcphackathon.com/">MCP Hackathon registry</a> · <a href="https://cerebralvalley.ai/e/built-with-4-7-hackathon">Cerebral Valley</a> · <a href="https://aws-agent-hackathon.devpost.com/">AWS AI Agent</a></li>
+  <li>Crypto hackathons: <a href="https://overflow.sui.io/">Sui Overflow</a> · <a href="https://ethglobal.com/events">ETHGlobal events</a> · <a href="https://blog.1inch.com/unite-defi-1inch-ethglobal-hackathon/">Unite DeFi</a> · <a href="https://chain.link/hackathon">Chainlink</a> · <a href="https://betteron.stellar.org/">Stellar Build Better</a> · <a href="https://dorahacks.io/hackathon/build-on-stellar">Stellar on DoraHacks</a></li>
+  <li>Platforms: <a href="https://dorahacks.io/hackathon">DoraHacks</a> · <a href="https://devpost.com/hackathons">Devpost</a> · <a href="https://lablab.ai/ai-hackathons">lablab.ai</a> · <a href="https://www.hackerearth.com/challenges/hackathon/">HackerEarth</a> · <a href="https://www.kaggle.com/competitions">Kaggle</a> · <a href="https://ethglobal.com/">ETHGlobal</a> · <a href="https://mlh.io/seasons/2026/events">MLH</a> · <a href="https://devfolio.co/hackathons">Devfolio</a> · <a href="https://taikai.network/en/hackathons">Taikai</a> · <a href="https://www.aicrowd.com/challenges">AICrowd</a> · <a href="https://www.drivendata.org/competitions/">DrivenData</a> · <a href="https://mlcontests.com/">ML Contests</a></li>
+  <li>How to win: <a href="https://info.devpost.com/blog/hackathon-judging-tips">Devpost — advice from 5 judges</a> · <a href="https://info.devpost.com/blog/understanding-hackathon-submission-and-judging-criteria">Devpost — submission &amp; judging criteria</a> · <a href="https://info.devpost.com/blog/6-tips-for-making-a-hackathon-demo-video">Devpost — winning demo video</a> · <a href="https://www.nicksingh.com/posts/win-hackathons-a-how-to-guide">Nick Singh — how-to guide</a> · <a href="https://getpushtoprod.substack.com/p/how-to-win-hackathons">Push To Prod — how to win</a> · <a href="https://lablab.ai/blog/ai-to-code-winning-hackathons-guide">lablab.ai — winning via vibe coding</a> · <a href="https://techcommunity.microsoft.com/blog/azuredevcommunityblog/ai-agents-hackathon-2025-%E2%80%93-category-winners-showcase/4415088">Microsoft — AI Agents 2025 winners</a> · <a href="https://taikai.network/en/blog/hackathon-judging">TAIKAI — judging criteria</a></li>
+</ul>
+
+<footer>
+  Compiled by 4 parallel research agents · May 14, 2026 · Findings reflect web research at that time — always confirm deadlines and prize structures on the official page before committing.
+</footer>
+
+</div>
+</body>
+</html>
