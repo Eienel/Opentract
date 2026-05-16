@@ -35,6 +35,9 @@ def _build_task_cfg(task_id: int, cfg: RunAllConfig) -> TaskRunConfig:
         self_consistency_temp=overrides.get("self_consistency_temp", cfg.self_consistency_temp),
         max_demos=overrides.get("max_demos", cfg.max_demos),
         limit_tests=overrides.get("limit_tests", cfg.limit_tests),
+        max_tokens=overrides.get("max_tokens"),
+        stop=overrides.get("stop"),
+        flush_every=overrides.get("flush_every", 50),
     )
 
 
@@ -46,8 +49,7 @@ def run_all(cfg: RunAllConfig, tokenizer: Any | None = None, stub_responder=None
     for tid in TASK_IDS:
         task = load_task(tid)
         tcfg = _build_task_cfg(tid, cfg)
-        cache_path = os.path.join(cfg.out_dir, f"{task.slug}.cache.jsonl")
-        path = run_task(task, backend, tcfg, cfg.out_dir, tokenizer=tokenizer, cache_path=cache_path)
+        path = run_task(task, backend, tcfg, cfg.out_dir, tokenizer=tokenizer)
         jsonl_paths.append(path)
 
     return pack_submission(jsonl_paths, cfg.submission_path)

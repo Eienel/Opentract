@@ -70,6 +70,26 @@ TASK_HINTS: dict[int, str] = {
 }
 
 
+# Per-task generation params. The cheap tasks (integers, binary labels) get a
+# tight max_tokens and a stop sequence on </label> so the model can't burn
+# tokens on rambling -- often the single biggest cost win.
+TASK_GEN_PARAMS: dict[int, dict] = {
+    1: {"max_tokens": 30,   "stop": ["</label>"]},   # integer
+    2: {"max_tokens": 30,   "stop": ["</label>"]},   # integer
+    3: {"max_tokens": 30,   "stop": ["</label>"]},   # integer
+    4: {"max_tokens": 200,  "stop": ["</label>"]},   # short code/string
+    5: {"max_tokens": 20,   "stop": ["</label>"]},   # binary label
+    6: {"max_tokens": 30,   "stop": ["</label>"]},   # categorical label
+    7: {"max_tokens": 150,  "stop": ["</label>"]},   # open-ended short answer
+    8: {"max_tokens": 4000, "stop": None},           # full Triton kernel
+}
+
+
+def task_gen_params(task_id: int) -> dict:
+    """Default generation params for a task; the runner config may override."""
+    return dict(TASK_GEN_PARAMS.get(task_id, {"max_tokens": 4096, "stop": None}))
+
+
 def build_prompt(task: Task, query_input: object, examples_str: str) -> str:
     hint = TASK_HINTS.get(task.task_id, "")
     return _DEFAULT_TEMPLATE.format(

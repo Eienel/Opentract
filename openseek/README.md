@@ -1,12 +1,39 @@
 # OpenSeek Track 3 — Sprint Runbook
 
-ICL data annotation on 8 long-context tasks with **Qwen3-4B**, served via
-**FlagScale + vLLM**. Submission deadline: **May 20, 2026, 16:59 UTC+8**.
+ICL data annotation on 8 long-context tasks with **Qwen3-4B**. Submission
+deadline: **May 20, 2026, 16:59 UTC+8**. Two execution paths supported:
 
-This module is purpose-built for the OpenSeek format and runs the full pipeline:
-load → retrieve demos → prompt → call Qwen3-4B → parse `<label>` → write JSONL →
-ZIP for upload. See `../hackathon-research.html` for the broader hackathon
-strategy.
+- **Phone-only (no PC, no GPU)** — Kaggle Notebook + hosted Qwen3-4B API. See §A.
+- **Self-hosted (GPU + FlagScale)** — for the committee-reproducibility path. See §B.
+
+Both paths use the **exact same pipeline code** because FlagScale's serving
+endpoint and every hosted Qwen3-4B endpoint speak the same OpenAI-compatible
+API. The only difference is `--base-url`.
+
+## A. Phone-only path (Kaggle Notebook + hosted API)
+
+1. Push your `Opentract` branch to a **public** repo on github.com (Settings →
+   Change visibility → Public).
+2. Get a Qwen3-4B API key. Recommended: [OpenRouter](https://openrouter.ai) free
+   tier on `qwen/qwen3-4b:free`, paid `qwen/qwen3-4b` as fallback (~$4 for the
+   full sprint). Alternatives: Alibaba DashScope, Together AI.
+3. Open Kaggle on your phone → New Notebook → Settings: **Accelerator None,
+   Internet on**.
+4. **Add a Kaggle Secret** named `OPENROUTER_API_KEY` (Add-ons → Secrets) with
+   the API key value.
+5. Open `openseek/scripts/kaggle_run.ipynb` in the GitHub repo, copy its cells
+   into your Kaggle notebook (or upload the `.ipynb` directly).
+6. Tap **Run All**. The notebook clones the repo, fetches the 8 datasets, runs
+   the connectivity check, a tiny smoke run, then the full ~1–3 hour run.
+7. When done, download `submission.zip` from the notebook's Output panel.
+8. On flagos.io Submission tab → Prediction Result → upload the ZIP.
+
+Token economy is built in: per-task `max_tokens` + `stop=["</label>"]` so cheap
+tasks (integer/binary) cost ~20 output tokens each, not 4096. The shared per-task
+demo prefix is byte-identical across 500 queries, so vLLM/OpenRouter prefix
+caching kicks in automatically and the 30K input is paid for once.
+
+## B. Self-hosted path (GPU + FlagScale)
 
 ## 0. Local smoke test (no GPU, no model — instant)
 

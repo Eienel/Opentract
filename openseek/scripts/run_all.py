@@ -12,6 +12,7 @@ Usage:
 """
 
 import argparse
+import os
 
 import _bootstrap  # noqa: F401
 
@@ -22,11 +23,14 @@ from openseek.src.retrieve import RetrievalConfig
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--base-url", default="http://0.0.0.0:2026/v1")
-    ap.add_argument("--model", default="../Qwen3-4B")
-    ap.add_argument("--api-key", default="EMPTY")
-    ap.add_argument("--max-tokens", type=int, default=4096)
+    ap.add_argument("--base-url", default=os.environ.get("OPENAI_BASE_URL", "http://0.0.0.0:2026/v1"))
+    ap.add_argument("--model", default=os.environ.get("OPENAI_MODEL", "../Qwen3-4B"))
+    ap.add_argument("--api-key", default=os.environ.get("OPENAI_API_KEY", "EMPTY"))
+    ap.add_argument("--max-tokens", type=int, default=4096,
+                    help="fallback when no per-task override; per-task defaults live in prompts.TASK_GEN_PARAMS")
     ap.add_argument("--temperature", type=float, default=0.0)
+    ap.add_argument("--concurrency", type=int, default=8,
+                    help="parallel in-flight requests against the API (default 8)")
     ap.add_argument("--strategy", choices=["first_n", "similarity"], default="first_n")
     ap.add_argument("--max-demo-tokens", type=int, default=28000)
     ap.add_argument("--n", "--self-consistency-n", type=int, default=1, dest="n")
@@ -48,6 +52,7 @@ def main() -> None:
             api_key=args.api_key,
             max_tokens=args.max_tokens,
             temperature=args.temperature,
+            concurrency=args.concurrency,
         ),
         retrieval=RetrievalConfig(
             strategy=args.strategy,
