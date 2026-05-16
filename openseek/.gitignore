@@ -1,0 +1,4 @@
+data/openseek-*.json
+outputs/
+.cache/
+*.zip
