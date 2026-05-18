@@ -75,7 +75,17 @@ Use the FlagOS project. Key beats to hit:
 Use the ICL prompt from the project:
 > "In the FlagOS pipeline, each prompt has three parts. First, a task description block that says exactly what annotation is needed and what the valid label set is — this is injected from config so it's always consistent. Second, a retrieved few-shot block — I use bge-m3 to find the k most similar labeled examples from the pool and format them as input→output pairs, ordered with the most similar one last (proximity to the query matters for attention). Third, the actual input to annotate. I found that 'similar-last' ordering and 4-8 shots gave the best accuracy on the mock dev set, though the right k varies by task — that's what the sweep harness finds automatically."
 
-### 6. Live coding task (common Mercor format)
+### 6. "Tell me about other projects you've built" — talking points
+
+**BlockBuilders:** "I built a 3D browser game that teaches crypto concepts using Three.js for instanced 60fps rendering and Gemini 2.5 Flash for an in-game AI tutor agent. Players can ask the AI anything about wallets, DeFi, or ZK proofs in natural language during gameplay. It mints a completion NFT on Sui blockchain."
+
+**ShadowPay:** "I built a confidential payroll protocol using Fully Homomorphic Encryption — specifically iExec Nox with Zama's FHE coprocessor — so companies can pay employees in stablecoins on-chain without exposing salaries publicly. I also added a natural language interface so you can type 'Pay Alice $5K monthly' and it generates the contract parameters."
+
+**Bequest:** "I built a crypto dead-man's switch. You designate a beneficiary; if you miss a check-in window, your assets auto-transfer. The tricky parts were the state machine (draft → armed → triggered enforced by minutely cron jobs), per-wallet AES-256 key management, and multi-channel check-in via web/Telegram/email."
+
+**Why these matter for Mercor:** These show you can architect non-trivial systems, integrate AI APIs into real products, and ship end-to-end — not just write isolated scripts.
+
+### 7. Live coding task (common Mercor format)
 
 Likely a Python task: string processing, data transformation, or a small ML function. Practice these:
 - Write a function to parse structured output from an LLM response
