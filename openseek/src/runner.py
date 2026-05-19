@@ -12,12 +12,12 @@ from __future__ import annotations
 
 import json
 import os
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Any
 
 from tqdm import tqdm
 
-from .data import Task
+from .data import Task, render_io
 from .parse import extract_label, majority_vote
 from .prompts import build_prompt, task_gen_params
 from .retrieve import RetrievalConfig, select_demos
@@ -37,6 +37,54 @@ class TaskRunConfig:
     # Mini-batch size for incremental JSONL flushes -- protects against losing
     # all progress if a long batch crashes mid-way.
     flush_every: int = 50
+    # Hard ceiling on the prompt+completion that the backend will accept. Used
+    # to compute a per-task safe demo budget so a long test input + a generous
+    # completion budget (task 8: 4000 tok) can't push the prompt past the model
+    # context window. Default mirrors --max-model-len in the Kaggle notebook.
+    model_max_len: int = 32768
+
+
+def _tok_len(text: str, tokenizer: Any | None) -> int:
+    if tokenizer is not None:
+        return len(tokenizer.encode(text, add_special_tokens=False))
+    return max(1, len(text) // 4)
+
+
+def _adjust_demo_budget(
+    task: Task,
+    remaining: list,
+    retrieval: RetrievalConfig,
+    max_tokens: int,
+    model_max_len: int,
+    tokenizer: Any | None,
+    safety_margin: int = 256,
+) -> RetrievalConfig:
+    """Return a retrieval config whose ``max_demo_tokens`` is small enough that
+    even the worst-case prompt (longest test input + full completion budget +
+    measured system/template overhead) fits inside ``model_max_len``.
+
+    Only narrows the budget; never widens it past ``retrieval.max_demo_tokens``.
+    """
+    # Measure the fixed overhead by building a real prompt with empty examples
+    # and the first test input, then subtract that input's token cost.
+    sample_prompt = build_prompt(task, remaining[0].input, "")
+    sample_input_rendered = render_io(remaining[0].input)
+    fixed_overhead = _tok_len(sample_prompt, tokenizer) - _tok_len(sample_input_rendered, tokenizer)
+
+    longest_input_tokens = max(_tok_len(render_io(t.input), tokenizer) for t in remaining)
+
+    safe = model_max_len - max_tokens - longest_input_tokens - fixed_overhead - safety_margin
+    safe = max(1024, safe)  # always pack at least one or two demos
+
+    if safe < retrieval.max_demo_tokens:
+        print(
+            f"  task {task.task_id}: trimmed demo budget "
+            f"{retrieval.max_demo_tokens} -> {safe} "
+            f"(longest input {longest_input_tokens} tok, completion {max_tokens} tok, "
+            f"system overhead {fixed_overhead} tok)"
+        )
+        return replace(retrieval, max_demo_tokens=safe)
+    return retrieval
 
 
 def _output_path(out_dir: str, task: Task) -> str:
@@ -80,15 +128,28 @@ def run_task(
         print(f"  task {task.task_id}: nothing to do")
         return out_path
 
-    # Demos are reused across queries in the task -- this is what makes
-    # provider-side prefix caching effective.
-    examples_str, n_packed = select_demos(demos_pool, remaining[0], cfg.retrieval, tokenizer)
-    print(f"  task {task.task_id}: packed {n_packed} demos into the prefix")
-
     # Resolve generation params: explicit > per-task default > backend default.
     defaults = task_gen_params(task.task_id)
     max_tokens = cfg.max_tokens if cfg.max_tokens is not None else defaults["max_tokens"]
     stop = cfg.stop if cfg.stop is not None else defaults.get("stop")
+
+    # Trim the demo budget so the WORST-CASE prompt (longest test input + full
+    # completion budget + system/template overhead) still fits in the model
+    # context. Without this, fixed MAX_DEMO_TOK + a long test input blows past
+    # --max-model-len and the backend returns 400.
+    adjusted_retrieval = _adjust_demo_budget(
+        task=task,
+        remaining=remaining,
+        retrieval=cfg.retrieval,
+        max_tokens=max_tokens,
+        model_max_len=cfg.model_max_len,
+        tokenizer=tokenizer,
+    )
+
+    # Demos are reused across queries in the task -- this is what makes
+    # provider-side prefix caching effective.
+    examples_str, n_packed = select_demos(demos_pool, remaining[0], adjusted_retrieval, tokenizer)
+    print(f"  task {task.task_id}: packed {n_packed} demos into the prefix")
 
     n = max(1, cfg.self_consistency_n)
     temp = cfg.self_consistency_temp if n > 1 else None
