@@ -6,7 +6,7 @@ elnasirulabaran212@gmail.com · Bauchi, Nigeria · github.com/Eienel
 ## Education
 
 **Abubakar Tafawa Balewa University Bauchi**, Nigeria
-B.Eng / BSc [DEGREE — e.g. Computer Engineering / Computer Science] · 3rd Year · Expected graduation: [20XX]
+B.Eng Computer Engineering · 3rd Year · Expected graduation: 2028
 
 ---
 

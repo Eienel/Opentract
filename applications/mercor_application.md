@@ -32,8 +32,8 @@ Estimated time: 30 min to fill profile + 60-90 min AI interview
 
 **Education:**
 - University: Abubakar Tafawa Balewa University Bauchi
-- Degree: B.Eng [DEGREE] / Computer Engineering
-- Year: 3rd year (expected graduation [20XX])
+- Degree: B.Eng Computer Engineering
+- Year: 3rd year (expected graduation 2028)
 - GPA: [Add if ≥ 3.5/4.0 or equivalent]
 
 **Expected hourly rate:** Start at $15-20/hr. Do NOT undersell below $15 — Mercor routes you to higher-quality tasks if you set a minimum above their floor.
